@@ -1,6 +1,6 @@
 {
   "name": "dext-wikipedia-plugin",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Wikipedia plugin for dext, a smart launcher powered by Javascript",
   "main": "index.js",
   "dependencies": {
