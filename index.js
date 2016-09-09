@@ -42,11 +42,13 @@ module.exports = {
     const url = `${BASE_URL}?${searchParams}&prop=revisions|langlinks`
 
     request({ url }, (error, responseObj, body) => {
-      if (error) {
+      const response = JSON.parse(body)
+
+      if (error || response.error) {
         resolve({ items })
         return
       }
-      const response = JSON.parse(body)
+
       const pages = mapToItem(response.query.pages)
       resolve({ items: pages })
     })
