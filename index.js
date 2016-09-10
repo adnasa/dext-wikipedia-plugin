@@ -39,7 +39,8 @@ module.exports = {
 
     const searchObj = Object.assign({}, queryObj, { titles: q })
     const searchParams = qs.stringify(searchObj)
-    const url = `${BASE_URL}?${searchParams}&prop=revisions|langlinks`
+    const url = `${BASE_URL}?${searchParams}` +
+      '&prop=revisions|langlinks|pageterms|pageimages'
 
     request({ url }, (error, responseObj, body) => {
       const response = JSON.parse(body)
@@ -72,21 +73,23 @@ function mapToItem (pages) {
     const {
       title,
       langlinks,
+      terms,
+      thumbnail,
     } = page
 
     const hasLanglinks = !!langlinks
 
     const item = {
       title,
-      subtitle: hasLanglinks
-        ? langlinks[0].url
-        : title,
+      subtitle: terms && terms.description,
       // Somehow, some articles doesn't provide a langlink...
       arg: hasLanglinks
         ? langlinks[0].url
         : 'http://wikipedia.org',
       icon: {
-        path: './icon.png',
+        path: thumbnail
+          ? thumbnail.source
+          : './icon.png',
       },
       context: page,
     }
