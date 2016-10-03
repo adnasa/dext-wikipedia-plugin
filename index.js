@@ -29,7 +29,7 @@ module.exports = {
     title: 'wikipedia',
     subtitle: 'Search through articles of wikipedia',
   },
-  execute: q => new Promise(resolve => {
+  query: q => new Promise(resolve => {
     const items = []
 
     if (!q) {
@@ -50,7 +50,7 @@ module.exports = {
         return
       }
 
-      const pages = mapToItem(response.query.pages)
+      const pages = mapToPages(response.query.pages)
       resolve({ items: pages })
     })
   }),
@@ -61,13 +61,11 @@ module.exports = {
   },
 }
 
-function render ({
-  revisions,
-}) {
+function render ({ revisions }) {
   return revisions[0]['*']
 }
 
-function mapToItem (pages) {
+function mapToPages (pages) {
   return Object.keys(pages).reduce((acc, pageId) => {
     const page = pages[pageId]
     const {
